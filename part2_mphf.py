@@ -16,8 +16,8 @@ import matplotlib.pyplot as plt
 from utils import int_lists
 
 
-#%% Bloom Filter Test Function
-#   --------------------------
+#%% MPHF Test Function
+#   ------------------
 
 def part2(n,ratio):   
     # Generate K and K'
@@ -45,7 +45,8 @@ def part2(n,ratio):
             mphf_check = False
         else:
             mphf_check = True
-        true_check  = elm in K
+        
+        true_check = elm in K
         
         if mphf_check and true_check:
             true_ct += 1
@@ -67,8 +68,8 @@ def part2(n,ratio):
 #%% Results
 #   -------
 
-n_list = np.linspace(50,1000,20)
-ratio_list = np.linspace(0.1,0.6,6)
+n_list = np.linspace(1000,10000,10)
+ratio_list = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6]
 
 false_pos_df = pd.DataFrame(n_list, columns=["data size"])
 CPU_time_df  = pd.DataFrame(n_list, columns=["data size"])
@@ -79,12 +80,12 @@ for ratio in ratio_list:
     size_arr = np.zeros(len(n_list))
     for i in range(len(n_list)):
         n = int(n_list[i])
-        #print("ratio:",ratio,"n:",n)
+        print('n',n,'ratio',ratio)
+        print(" ")
         true_rt, flase_pos_rt, flase_neg_rt, CPU_time, size = part2(n,ratio)
         rate_arr[i] = flase_pos_rt
         time_arr[i] = CPU_time
         size_arr[i] = size
-        #print(" ")
     false_pos_df["ratio "+str(round(ratio,2))] = rate_arr
     CPU_time_df["ratio "+str(round(ratio,2))]  = time_arr
     mem_size_df["ratio "+str(round(ratio,2))]  = size_arr
